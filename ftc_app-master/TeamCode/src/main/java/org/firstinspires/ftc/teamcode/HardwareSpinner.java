@@ -2,10 +2,15 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+/**
+ * Created by FTC7297 on 11/12/2016.
+ */
+
+public class HardwareSpinner {
+
 
 /**
  * This is NOT an opmode.
@@ -18,20 +23,18 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  * Motor channel:  Left  drive motor:        "left_drive"
  * Motor channel:  Right drive motor:        "right_drive"
- * Servo channel:  Servo to raise/lower arm: "arm"
- * Servo channel:  Servo to open/close claw: "claw"
- *
+// * Servo channel:  Servo to raise/lower arm: "arm"
+// * Servo channel:  Servo to open/close claw: "claw"
+// *
  * Note: the configuration of the servos is such that:
  *   As the arm servo approaches 0, the arm position moves up (away from the floor).
  *   As the claw servo approaches 0, the claw opens up (drops the game element).
  */
-public class HardwareChassis
-{
+
+
     /* Public OpMode members. */
-    public DcMotor  leftMotor   = null;
+    public DcMotor leftMotor   = null;
     public DcMotor  rightMotor  = null;
-    public DcMotor  rightSpinnerMotor  = null;
-    public DcMotor  leftSpinnerMotor  = null;
 //    public ColorSensor colorSensor = null;
 //    public Servo    arm         = null;
 //    public Servo    claw        = null;
@@ -48,7 +51,7 @@ public class HardwareChassis
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwareChassis() {
+    public HardwareSpinner() {
     }
 
     /* Initialize standard Hardware interfaces */
@@ -56,28 +59,25 @@ public class HardwareChassis
         // save reference to HW Map
         hwMap = ahwMap;
 
+
+
+
+
         // Define and Initialize Motors
-        leftMotor   = hwMap.dcMotor.get("left_drive");
-        rightMotor  = hwMap.dcMotor.get("right_drive");
+        leftMotor   = hwMap.dcMotor.get("spinner_motor_1");
+        rightMotor  = hwMap.dcMotor.get("spinner_motor_2");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftSpinnerMotor = hwMap.dcMotor.get ("leftSpinnerMotor");
-        rightSpinnerMotor = hwMap.dcMotor.get ("rightSpinnerMotor");
-        leftSpinnerMotor. setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         leftMotor.setPower(0);
         rightMotor.setPower(0);
-        leftSpinnerMotor.setPower(0);
-        rightSpinnerMotor.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightSpinnerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftSpinnerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        // Initialize color sensor
+//
+//        // Initialize color sensor
 //        colorSensor = hwMap.colorSensor.get("sensor_color");
 
         // Define and initialize ALL installed servos.

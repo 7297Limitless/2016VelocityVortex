@@ -34,12 +34,8 @@ package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;
 
 /**
  * This OpMode uses the common HardwareK9bot class to define the devices on the robot.
@@ -58,12 +54,12 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Chassis: Teleop Tank", group="Chassis")
+@TeleOp(name="Spinner: Teleop Speed", group="Chassis")
 //@Disabled
-public class ChassisTeleopTank_Linear extends LinearOpMode {
+public class SpinnerTeleopSpeed extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareChassis   robot           = new HardwareChassis();              // Use a K9'shardware
+    HardwareSpinner   robot           = new HardwareSpinner();              // Use a K9'shardware
 //    double          armPosition     = robot.ARM_HOME;                   // Servo safe position
 //    double          clawPosition    = robot.CLAW_HOME;                  // Servo safe position
 //    final double    CLAW_SPEED      = 0.01 ;                            // sets rate to move servo
@@ -71,26 +67,14 @@ public class ChassisTeleopTank_Linear extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        // hsvValues is an array that will hold the hue, saturation, and value information.
-//        float hsvValues[] = {0F,0F,0F};
-
-        // values is a reference to the hsvValues array.
-//        final float values[] = hsvValues;
-
 
         double left;
         double right;
-        double spinnerSpeed = 0;
-        boolean rightBumperPressed = false;
-        boolean leftBumperPressed = false;
 
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-
-        // Set the LED in the beginning
-//        robot.colorSensor.enableLed(false);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -98,39 +82,32 @@ public class ChassisTeleopTank_Linear extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        double speed = 0;
+
+        boolean leftBumperPressed = false;
+        boolean rightBumperPressed = false;
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            // convert the RGB values to HSV values.
-//            Color.RGBToHSV(robot.colorSensor.red() * 8, robot.colorSensor.green() * 8, robot.colorSensor.blue() * 8, hsvValues);
-
-            // send the info back to driver station using telemetry function.
-//            telemetry.addData("Clear", robot.colorSensor.alpha());
-//            telemetry.addData("Red  ", robot.colorSensor.red());
-//            telemetry.addData("Green", robot.colorSensor.green());
-//            telemetry.addData("Blue ", robot.colorSensor.blue());
-//            telemetry.addData("Hue", hsvValues[0]);
 
             // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-            left = -gamepad1.left_stick_y;
-            right = -gamepad1.right_stick_y;
-            robot.leftMotor.setPower(left);
-            robot.rightMotor.setPower(right);
+//            left = -gamepad1.left_stick_y;
+//            right = -gamepad1.right_stick_y;
 
-            if (!leftBumperPressed && gamepad1.left_bumper && spinnerSpeed>-1){
-                spinnerSpeed -= .2;
+            if (!leftBumperPressed && gamepad1.left_bumper && speed>-1){
+                speed -= .2;
 
             }
-            if (!rightBumperPressed && gamepad1.right_bumper && spinnerSpeed <1){
-                spinnerSpeed += .2;
+            if (!rightBumperPressed && gamepad1.right_bumper && speed<1){
+                speed += .2;
             }
             leftBumperPressed = gamepad1.left_bumper;
             rightBumperPressed = gamepad1.right_bumper;
 
-            robot.leftMotor.setPower(spinnerSpeed);
-            robot.rightMotor.setPower(spinnerSpeed);
+            robot.leftMotor.setPower(speed);
+            robot.rightMotor.setPower(speed);
 
-            // Use gamepad Y & A raise and lower the arm
+            // Use gamepad Y & A raise and lower the a
 //            if (gamepad1.a)
 //                armPosition += ARM_SPEED;
 //            else if (gamepad1.y)
@@ -151,8 +128,7 @@ public class ChassisTeleopTank_Linear extends LinearOpMode {
 //            // Send telemetry message to signify robot running;
 //            telemetry.addData("arm",   "%.2f", armPosition);
 //            telemetry.addData("claw",  "%.2f", clawPosition);
-            telemetry.addData("left",  "%.2f", left);
-            telemetry.addData("right", "%.2f", right);
+            telemetry.addData("speed",  "%.2f", speed);
             telemetry.update();
 
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
