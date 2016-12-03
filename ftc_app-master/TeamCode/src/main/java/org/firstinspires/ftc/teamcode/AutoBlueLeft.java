@@ -69,7 +69,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 @Autonomous(name="Chassis: Auto Drive By Encoder", group="Chassis")
 //@Disabled
-public class ChassisAutoDriveByEncoder_Linear extends LinearOpMode {
+public class AutoBlueLeft extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareChassis         robot   = new HardwareChassis();   // Use a Pushbot's hardware
@@ -114,10 +114,13 @@ public class ChassisAutoDriveByEncoder_Linear extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  -8,  -8, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderRotate(90,TURN_SPEED,3.0);
-        encoderRotate(-180,TURN_SPEED,3.0);
-
+        encoderDrive(DRIVE_SPEED,  51,  51, 8.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderRotate(90,TURN_SPEED,8.0);
+        encoderDrive(DRIVE_SPEED,72,72, 8.0);
+        encoderRotate (90, TURN_SPEED, 8.0);
+        encoderDrive (DRIVE_SPEED, 24, 24, 8.0);
+        encoderRotate (-45, TURN_SPEED, 8.0);
+        encoderDrive (DRIVE_SPEED, 18, 18, 8.0);
        // encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
 //        robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
@@ -189,4 +192,6 @@ public class ChassisAutoDriveByEncoder_Linear extends LinearOpMode {
         double distance= 16.5*3.1415*degrees/360;
         encoderDrive(speed,distance,-distance,timeout);
     }
+
+
 }

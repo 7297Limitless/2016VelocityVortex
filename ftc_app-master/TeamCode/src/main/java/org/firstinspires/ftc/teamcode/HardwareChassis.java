@@ -32,9 +32,10 @@ public class HardwareChassis
     public DcMotor  rightMotor  = null;
     public DcMotor  rightSpinnerMotor  = null;
     public DcMotor  leftSpinnerMotor  = null;
+    public DcMotor  flapperMotor = null;
 //    public ColorSensor colorSensor = null;
 //    public Servo    arm         = null;
-//    public Servo    claw        = null;
+//    public Servo    claw      9  = null;
 
 //    public final static double ARM_HOME = 0.2;
 //    public final static double CLAW_HOME = 0.2;
@@ -62,13 +63,15 @@ public class HardwareChassis
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         leftSpinnerMotor = hwMap.dcMotor.get ("leftSpinnerMotor");
         rightSpinnerMotor = hwMap.dcMotor.get ("rightSpinnerMotor");
-        leftSpinnerMotor. setDirection(DcMotor.Direction.REVERSE);
+        leftSpinnerMotor.setDirection(DcMotor.Direction.REVERSE);
+        flapperMotor = hwMap.dcMotor.get ("flapperMotor");
 
         // Set all motors to zero power
         leftMotor.setPower(0);
         rightMotor.setPower(0);
         leftSpinnerMotor.setPower(0);
         rightSpinnerMotor.setPower(0);
+        flapperMotor.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -76,6 +79,7 @@ public class HardwareChassis
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightSpinnerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftSpinnerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        flapperMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Initialize color sensor
 //        colorSensor = hwMap.colorSensor.get("sensor_color");
