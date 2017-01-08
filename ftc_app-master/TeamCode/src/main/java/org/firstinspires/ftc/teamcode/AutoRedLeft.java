@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.configuration.DeviceConfiguration;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
@@ -67,16 +68,16 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoBlueLeft", group="Chassis")
+@Autonomous(name="AutoRedLeft", group="Chassis")
 //@Disabled
-public class AutoBlueLeft extends LinearOpMode {
+public class AutoRedLeft extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareChassis         robot   = new HardwareChassis();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
+    static final double     COUNTS_PER_MOTOR_REV    = 1152 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1    ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -104,39 +105,89 @@ public class AutoBlueLeft extends LinearOpMode {
         robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0", "Starting at %7d :%7d",
+        telemetry.addData("Path0",  "Starting at %7d :%7d",
                 robot.leftMotor.getCurrentPosition(),
                 robot.rightMotor.getCurrentPosition());
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        while (opModeIsActive()){
 
-            // Step through each leg of the path,
-            // Note: Reverse movement is obtained by setting a negative distance (not speed)
-            encoderDrive(DRIVE_SPEED,  15, 15, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-            encoderRotate(45, TURN_SPEED, 8.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-            encoderDrive(DRIVE_SPEED, 48, 48, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-            encoderRotate(90, TURN_SPEED, 4.0);
-            encoderDrive(DRIVE_SPEED,  61, 61, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+//        while (opModeIsActive()){
+//            while (robot.rightMotor.getCurrentPosition() < 1000){
+//                robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.leftMotor.setPower(-0.5);
+//                robot.rightMotor.setPower(0.5);
+//                robot.leftMotor.setTargetPosition(1718);
+//                robot.rightMotor.setTargetPosition(1718);
+//                robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//                robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.leftMotor.setPower(-0.5);
+//                robot.rightMotor.setPower(0.5);
+//                robot.leftMotor.setTargetPosition(-360);
+//                robot.rightMotor.setTargetPosition(360);
+//                robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//                robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.leftMotor.setPower(-0.5);
+//                robot.rightMotor.setPower(0.5);
+//                robot.leftMotor.setTargetPosition(4124);
+//                robot.rightMotor.setTargetPosition(4124);
+//                robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//                robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.leftMotor.setPower(-0.5);
+//                robot.rightMotor.setPower(0.5);
+//                robot.leftMotor.setTargetPosition(-720);
+//                robot.rightMotor.setTargetPosition(720);
+//                robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//                robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                robot.leftMotor.setPower(-0.5);
+//                robot.rightMotor.setPower(0.5);
+//                robot.leftMotor.setTargetPosition(6988);
+//                robot.rightMotor.setTargetPosition(6988);
+//                robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//                robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            }
+//            robot.leftMotor.setPower(0.0);
+//            robot.rightMotor.setPower(0.0);
+
+            encoderDrive(DRIVE_SPEED,  15,  15, 8.0);
+            encoderRotate(-45,TURN_SPEED,8.0);
+            encoderDrive(DRIVE_SPEED,36,36, 8.0);
+            encoderRotate (-90, TURN_SPEED, 8.0);
+            encoderDrive (DRIVE_SPEED, 16, 16, 8.0);
+            encoderRotate (-90, TURN_SPEED, 8.0);
+            encoderDrive (DRIVE_SPEED, 61, 61, 8.0);
+        }
+
+        // Step through each leg of the path,
+        // Note: Reverse movement is obtained by setting a negative distance (not speed)
+
+
+        // encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
 //        robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
 //        robot.rightClaw.setPosition(0.0);
 //        sleep(1000);     // pause for servos to move
 
-            telemetry.addData("Path2",  "Running at %7d :%7d",
-                    robot.leftMotor.getCurrentPosition(),
-                    robot.rightMotor.getCurrentPosition());
-            telemetry.update();
-
-
-            telemetry.addData("Path", "Complete");
-            telemetry.update();
-        }}
 
     /*
-     *  Method to perfmorm a relative move, based on encoder counts.
+           telemetry.addData("Path", "Complete");
+        telemetry.update();
+    }
+  *  Method to perfmorm a relative move, based on encoder counts.
      *  Encoders are not reset as the move is based on the current position.
      *  Move will stop if any of three conditions occur:
      *  1) Move gets to the desired position
@@ -164,8 +215,11 @@ public class AutoBlueLeft extends LinearOpMode {
 
             // reset the timeout time and start motion.
             runtime.reset();
-            robot.leftMotor.setPower(Math.abs(speed));
-            robot.rightMotor.setPower(Math.abs(speed));
+            while (robot.rightMotor.getCurrentPosition() < rightInches && robot.leftMotor.getCurrentPosition() < leftInches){
+                robot.leftMotor.setPower(Math.abs(speed));
+                robot.rightMotor.setPower(Math.abs(speed));
+            }
+
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
@@ -191,7 +245,11 @@ public class AutoBlueLeft extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
+
     public void encoderRotate(double degrees, double speed, double timeout) {
         double distance= 16.5*3.1415*degrees/360;
         encoderDrive(speed,distance,-distance,timeout);
-    }}
+    }
+
+
+}

@@ -145,6 +145,8 @@ public class ChassisTeleopTank_Linear extends LinearOpMode {
                 robot.flapperMotor.setPower(-1);
             else if (gamepad1.b)
                 robot.flapperMotor.setPower(0);
+            else if (gamepad1.x)
+                robot.flapperMotor.setPower(1);
             // Use gamepad Y & A raise and lower the arm
 //            if (gamepad1.a)
 //                armPosition += ARM_SPEED;
