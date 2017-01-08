@@ -80,6 +80,8 @@ public class ChassisTeleopTank_Linear extends LinearOpMode {
 
         double left;
         double right;
+        double direction;
+        double power;
         double spinnerSpeed = 0;
         boolean rightBumperPressed = false;
         boolean leftBumperPressed = false;
@@ -113,27 +115,35 @@ public class ChassisTeleopTank_Linear extends LinearOpMode {
 //            telemetry.addData("Hue", hsvValues[0]);
 
             // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-            left = -gamepad1.left_stick_x+gamepad1.left_stick_y;
-            right = gamepad1.left_stick_x+gamepad1.left_stick_y;
 
-            robot.leftMotor.setPower(left);
-            robot.rightMotor.setPower(right);
+            direction = Math.atan2(gamepad1.left_stick_x,  gamepad1.right_stick_y);
+            power = Math.sqrt(gamepad1.left_stick_x*gamepad1.left_stick_x + gamepad1.left_stick_y*gamepad1.left_stick_y)
+
+            left = Math.sin(direction)+Math.cos(direction);
+            right =Math.sin(direction)-Math.cos(direction);
+
+            //left = -gamepad1.left_stick_x+gamepad1.left_stick_y;
+
+            //right = gamepad1.left_stick_x+gamepad1.left_stick_y;
+
+            robot.leftMotor.setPower(power*left);
+            robot.rightMotor.setPower(power*right);
 
             leftBumperPressed = gamepad1.left_bumper;
             rightBumperPressed = gamepad1.right_bumper;
 
-            if (gamepad1.left_bumper) {
+            if (rightBumperPressed) {
                 robot.leftSpinnerMotor.setPower(-1);
                 robot.rightSpinnerMotor.setPower(-1);
             }
-            if (gamepad1.right_bumper) {
+            else if (leftBumperPressed){
                 robot.leftSpinnerMotor.setPower(0);
                 robot.rightSpinnerMotor.setPower(0);
             }
 
             if (gamepad1.a)
                 robot.flapperMotor.setPower(-1);
-            if (gamepad1.b)
+            else if (gamepad1.b)
                 robot.flapperMotor.setPower(0);
             // Use gamepad Y & A raise and lower the arm
 //            if (gamepad1.a)
