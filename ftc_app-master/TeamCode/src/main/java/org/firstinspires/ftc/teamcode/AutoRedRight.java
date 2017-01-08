@@ -38,8 +38,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -67,9 +65,9 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoBlueLeft", group="Chassis")
-//@Disabled
-public class AutoBlueLeft extends LinearOpMode {
+@Autonomous(name="AutoRedRight", group="Chassis")
+@Disabled
+public class AutoRedRight extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareChassis         robot   = new HardwareChassis();   // Use a Pushbot's hardware
@@ -113,13 +111,13 @@ public class AutoBlueLeft extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()){
 
-            // Step through each leg of the path,
-            // Note: Reverse movement is obtained by setting a negative distance (not speed)
-            encoderDrive(DRIVE_SPEED,  15, 15, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-            encoderRotate(45, TURN_SPEED, 8.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-            encoderDrive(DRIVE_SPEED, 48, 48, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-            encoderRotate(90, TURN_SPEED, 4.0);
-            encoderDrive(DRIVE_SPEED,  61, 61, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        // Step through each leg of the path,
+        // Note: Reverse movement is obtained by setting a negative distance (not speed)
+        encoderDrive(DRIVE_SPEED,  15, 15, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderRotate(45, TURN_SPEED, 8.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        encoderDrive(DRIVE_SPEED, 48, 48, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        encoderRotate(90, TURN_SPEED, 4.0);
+        encoderDrive(DRIVE_SPEED,  61, 61, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
 //        robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
 //        robot.rightClaw.setPosition(0.0);
@@ -131,9 +129,9 @@ public class AutoBlueLeft extends LinearOpMode {
             telemetry.update();
 
 
-            telemetry.addData("Path", "Complete");
-            telemetry.update();
-        }}
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+    }}
 
     /*
      *  Method to perfmorm a relative move, based on encoder counts.
@@ -194,4 +192,4 @@ public class AutoBlueLeft extends LinearOpMode {
     public void encoderRotate(double degrees, double speed, double timeout) {
         double distance= 16.5*3.1415*degrees/360;
         encoderDrive(speed,distance,-distance,timeout);
-    }}
+}}
